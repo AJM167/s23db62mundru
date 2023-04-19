@@ -1,0 +1,20 @@
+extends layout
+block content
+ h1= title
+ - let books_id = toShow._id
+ - let books_type = toShow.books_type
+ - let books_year = toShow.books_year
+ - let books_price = toShow.books_price
+ div
+ div.row
+ div(class='booksAttr mr-3') books ID is:
+ div #{books_id}
+ div.row
+ div(class='booksAttr mr-3') books Type is:
+ div #{books_type}
+ div.row
+ div(class='booksAttr mr-3') books year is:
+ div #{books_year}
+ div.row
+ div(class='booksAttr mr-3') books Cost is:
+ div #{books_price}

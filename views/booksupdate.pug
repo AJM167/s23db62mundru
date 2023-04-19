@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1= title
+
+  if(toShow == null)
+    h2 No instance to update
+  else
+    - let booksid = toShow._id
+    - let books_type = toShow.books_type
+    - let books_year = toShow.books_year
+    - let books_price = toShow.books_price
+    - let actionid = "/resource/books/" + booksid
+    script let actionid = "#{actionid}"
+    div.row(class='mb-2')
+    div.mr-1 ID is 
+      span(style="color:red")  #{booksid}
+    form(id='booksForm', action= actionid, method="PUT")
+      div.form-group
+      div(class="row g-3 align-items-center")
+        div(class="col-1")
+          label.booksAttr(for='books_type',class="col-form-label") books type 
+        div(class="col-auto")
+          input#books_type(type='text', name='books_type',class="form-control", value=books_type)
+      div.form-group
+      div(class="row g-3 align-items-center")
+        div(class="col-1")
+          label.booksAttr(for='books_year',class="col-form-label") books year 
+        div(class="col-auto")
+          input#books_year(type='text', name='books_year',class="form-control", value=books_year)
+      div.form-group
+      div(class="row g-3 align-items-center")
+        div(class="col-1")
+          label.booksAttr(for='books_price',class="col-form-label") books price
+        div(class="col-auto")
+          input#books_price(type='number', name='books_price',class="form-control", value=books_price)
+      input(class="btn btn-danger m-2" type="submit")
+        //- button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    
+    script.
+      document.forms['booksForm'].addEventListener('submit', (event) => {
+       event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+       fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+        }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+       });
+      });

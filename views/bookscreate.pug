@@ -1,0 +1,28 @@
+extends layout
+block content
+ h1= title
+ form(id='booksForm', action="/resource/books", method="POST")
+  div.form-group
+   label.booksAttr(for='books_type') books type
+   input#books_type(type='text', name='books_type')
+  div.form-group
+   label.booksAttr(for='books_year') books year
+   input#books_year(type='text', name='books_year')
+  div.form-group
+   label.booksAttr(for='books_price') books price 
+   input#books_price(type='text', name='books_price')
+  input(type="submit")
+ script.
+  document.forms['booksForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) 
+    }).then((resp) => {
+        return resp.json();
+    }).then((body) => {
+        alert("Save succeded")
+    }).catch((error) => {
+        alert("Save failed " + error )
+    });
+   }); 
