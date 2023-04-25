@@ -1,18 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Hello, this is webapps. 
-  p Welcome to northwest missouri state university. My name is #{title}.
-  button(type="button" class="btn btn-secondary" onclick="doReduce()") Press Me
-  div#reduce Reduce the value
-  script.
-   let count = 20
-   let change = -1
-   function doReduce() {
-    count += change;
-    change -= 1;
-    document.getElementById('reduce').innerHTML=`Count ${count} with change ${change}`
-    console.log(count
-    )
-    }
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/books") Take me to books 
+    br
+    a(href="/logout") Logout
